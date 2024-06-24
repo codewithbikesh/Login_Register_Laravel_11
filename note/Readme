@@ -1,0 +1,81 @@
+                             <!-- How to create login page or register authentication in laravel 11 project  -->
+
+     1) uncomment this line for database from .env file and change the name of the database as well as database engine name
+
+     2) Add role in users table from migration file 
+         (read me : add this line of code after password column in users table)
+         $table->enum('role',['customer','admin'])->default('customer');
+ 
+     3) php artisan migrate to database from migration file
+        Run this command: php artisan migrate 
+
+     4) Add guards and providers in auth.php
+       
+
+
+    'guards' => [
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+        'admin' => [
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
+    ],
+
+
+  'providers' => [
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\User::class),
+        ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\User::class),
+        ],
+
+        // 'users' => [
+        //     'driver' => 'database',
+        //     'table' => 'users',
+        // ],
+    ],
+
+  5) To make middleware AdminRedirect 
+     Run this command: php artisan make:middleware AdminRedirect 
+
+
+  6)  To make Controller for Login 
+      Run this command: php artisan make:controller LoginController 
+
+
+   7) To make View files for login 
+      Run this command: php artisan make:view account\login
+
+
+   8) To make View files for login 
+   Run this command: php artisan make:view account\dashboard
+
+   
+  9)  To make Controller for Login 
+      Run this command: php artisan make:controller DashboardController 
+
+
+  10) To make View files for login 
+   Run this command: php artisan make:view account\register
+
+
+
+     ----------------------------------------------
+     Laravel 11 Multi Authentication :-
+     ----------------------------------------------
+
+     1. php version => 8.2
+     2. Composer
+     3. Download Laravel 
+     4. composer create-project laravel/laravel:^11.0 laravel-multi-authentication
+     5. Add guards and providers in auth.php
+     6. Create middlewares for guest and authenticated routes for admin 
+     7. Register middlewares in bootstrap/app.php
+     8. Write custom Authentication for Admin and Normal user
