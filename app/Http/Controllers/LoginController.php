@@ -40,8 +40,10 @@ public function register(){
 // This method will register the users 
 public function processRegister(Request $request){
     $validator = Validator::make($request->all(),[
-        'email' => 'required|email|unique:users',
-        'password' => 'required',
+       'email' => 'required|email|unique:users',
+       'name' => 'required',
+       'password' => 'required|confirmed|min:5',
+       'password_confirmation' => 'required',
     ]);
 
     if($validator->passes()){

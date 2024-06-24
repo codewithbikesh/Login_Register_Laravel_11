@@ -25,19 +25,43 @@
                                     <div class="row gy-3 overflow-hidden">
                                         <div class="col-12">
                                             <div class="form-floating mb-3">
-                                                <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" >
+                                                <input type="text" class="form-control @error('name')
+                                                    is-invalid
+                                                @enderror" name="name" id="name" placeholder="enter you name here">
+                                                @error('name')           
+                                                    <p class="invalid-feedback">{{ $message }}</p>
+                                                @enderror
+                                                <label for="name" class="form-label">Name</label>
+                                            </div>
+                                            <div class="form-floating mb-3">
+                                                <input type="email" class="form-control @error('email')
+                                                    is-invalid
+                                                @enderror" name="email" value="{{ old('email') }}" id="email" placeholder="name@example.com" >
+                                                @error('email')
+                                                    <p class="invalid-feedback">{{ $message }}</p>
+                                                @enderror
                                                 <label for="email" class="form-label">Email</label>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-floating mb-3">
-                                                <input type="password" class="form-control" name="password" id="password" value="" placeholder="Password" >
+                                                <input type="password" class="form-control @error('password')
+                                                    is-invalid
+                                                @enderror" name="password" id="password" value="{{ old('password') }}" placeholder="Password" >
+                                                @error('password')
+                                                    <p class="invalid-feedback">{{ $message }}</p>
+                                                @enderror
                                                 <label for="password" class="form-label">Password</label>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-floating mb-3">
-                                                <input type="password" class="form-control" name="confirm_password" id="confirm_password" value="" placeholder="Confirm Password" >
+                                                <input type="password" class="form-control @error('password_confirmation')
+                                                    is-invalid
+                                                @enderror" value="{{ old('password_confirmation') }}" name="password_confirmation" id="password_confirmation"  placeholder="Confirm Password" >
+                                                @error('password_confirmationa')
+                                                    <p class="invalid-feedback"></p>
+                                                @enderror
                                                 <label for="password" class="form-label">Confirm Password</label>
                                             </div>
                                         </div>
