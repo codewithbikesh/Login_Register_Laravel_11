@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
@@ -23,7 +25,7 @@ public function authenticate(Request $request){
 
     if($validator->passes()){
   if(Auth::attempt(['email'=>$request->email,'password'=>$request->password])){
-    //  return redirect('account.dashboard');
+     return view('account.dashboard');
   }else{
      return redirect()->route('account.login')->with('error', 'Either email or password is incorrect.');
   }
@@ -47,14 +49,21 @@ public function processRegister(Request $request){
     ]);
 
     if($validator->passes()){
-//   if(Auth::attempt(['email'=>$request->email,'password'=>$request->password])){
-//     //  return redirect('account.dashboard');
-//   }else{
-//      return redirect()->route('account.login')->with('error', 'Either email or password is incorrect.');
-//   }
+     $user = new User();
+     $user->name = $request->name;   
+     $user->email = $request->email;
+     $user->password = Hash::make($request->password);
+     $user->role = 'customer';
+     $user->save();
+     return redirect()->route('account.login')->with('success','You have registered successfully.');
     } else{
          return redirect()->route('account.register')->withInput()->withErrors($validator);
     }
 }
 
+
+public function logout(){
+     Auth::logout();
+     return redirect()->route('account.login');
+}
 }
